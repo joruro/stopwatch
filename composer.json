@@ -3,6 +3,7 @@
     "description": "Register the execution time of some parts of your code",
     "type": "library",
     "license": "MIT",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "joruro",
