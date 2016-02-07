@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Joruro\\Stopwatch\\": "src/Stopwatch"
+            "Joruro\\": "src/Joruro"
         }
     }
 }

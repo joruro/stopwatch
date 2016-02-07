@@ -1,6 +1,6 @@
 <?php
 
-namespace Stopwatch;
+namespace Joruro\Stopwatch;
 
 /**
  * Class Stopwatch
