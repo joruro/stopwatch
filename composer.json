@@ -3,7 +3,7 @@
     "description": "Very simple stopwatch capable of register multi execution times.",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "v0.0.1",
     "authors": [
         {
             "name": "joruro",
