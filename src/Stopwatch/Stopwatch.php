@@ -1,5 +1,7 @@
 <?php
 
+namespace Stopwatch;
+
 /**
  * Class Stopwatch
  */
