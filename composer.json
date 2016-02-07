@@ -1,0 +1,13 @@
+{
+    "name": "joruro/stopwatch",
+    "description": "Register the execution time of some parts of your code",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "joruro",
+            "email": "joruro@joruro.me"
+        }
+    ],
+    "require": {}
+}
