@@ -2,11 +2,11 @@
 
 include('../src/Stopwatch/Stopwatch.php');
 
-$attempts = 4;
-$counter = 10;
+$attempts = 2;
+$counter = 5;
 \Stopwatch\Stopwatch::start();
 for($j = 0; $j < $attempts; $j++) {
-    Stopwatch::start();
+    \Stopwatch\Stopwatch::start();
     for($i = 0; $i < $counter; $i++) {
         sleep(1);
     }
