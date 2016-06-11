@@ -2,6 +2,8 @@
 
 namespace Joruro\Stopwatch;
 
+use Joruro\Enum\TimeUnits;
+
 /**
  * Class Stopwatch
  */
@@ -10,10 +12,30 @@ class Stopwatch
 
     private static $instance;
 
+    /** @var string $timeUnits */
+    private $timeUnit;
+
     private function __construct() {}
 
     /** @var array $startSlots */
     private $startSlots = [];
+
+    /**
+     * Configures the stopwatch
+     * @param $config
+     */
+    public static function configure($config)
+    {
+        $instance = self::stopwatch();
+        if(empty($config)) {
+            return;
+        }
+        if(isset($config['timeUnit'])) {
+            $instance->timeUnit = $config['timeUnit'];
+        }
+
+        self::stopwatch()->push(microtime(true));
+    }
 
     /**
      * Starts the stopwatch
@@ -25,14 +47,16 @@ class Stopwatch
 
     /**
      * Stops the stopwatch
-     * @return int $total
+     * @param null $timeUnit
+     * @return float
      */
-    public static function stop()
+    public static function stop($timeUnit = null)
     {
         $startTime = self::stopwatch()->pop();
-        $total = round((microtime(true) - $startTime),6);
 
-        return $total;
+        $totalTime = microtime(true) - $startTime;
+
+        return self::stopwatch()->timeConverter($totalTime, $timeUnit);
     }
 
     /**
@@ -71,6 +95,34 @@ class Stopwatch
     private function setStartSlots($slots)
     {
         $this->startSlots = $slots;
+    }
+
+    /**
+     * @param float $time
+     * @param null|string $timeUnit
+     * @return float
+     */
+    private function timeConverter($time, $timeUnit = null)
+    {
+        return $time * $this->unitMapper($timeUnit);
+    }
+
+    /**
+     * @param string|null $timeUnit
+     * @return int
+     * @throws InvalidTimeUnitException
+     */
+    private function unitMapper($timeUnit)
+    {
+        $timeUnit = ($timeUnit)?: $this->timeUnit;
+
+        switch($timeUnit) {
+            case TimeUnits::SECONDS: return 1;
+            case TimeUnits::MILLISECONDS: return 1000;
+            case TimeUnits::MICROSECONDS: return 1000000;
+        }
+
+        throw new InvalidTimeUnitException($timeUnit);
     }
 
 }

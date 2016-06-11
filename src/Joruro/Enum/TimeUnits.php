@@ -10,4 +10,5 @@ class TimeUnits extends Enum
 {
     const SECONDS = 's';
     const MILLISECONDS = 'ms';
+    const MICROSECONDS = 'us';
 }
