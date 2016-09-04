@@ -1,16 +1,18 @@
 <?php
 
-include('../src/Joruro/Stopwatch/Stopwatch.php');
+include('../vendor/autoload.php');
 
+use Joruro\Enum\TimeUnits;
 use Joruro\Stopwatch\Stopwatch;
 
 $counter = 5;
+$sleepTime = 1;
 Stopwatch::start();
-for($i = 0; $i < $counter; $i++) {
-    sleep(1);
+for ($i = 0; $i < $counter; $i++) {
+    sleep($sleepTime);
 }
-$time = Stopwatch::stop();
+$time = Stopwatch::stop(TimeUnits::SECONDS);
 
-echo "A foreach of {$counter} loops took approximately {$time} seconds\n";
+echo "A foreach of {$counter} loops where each loop slept {$sleepTime} seconds took approximately {$time} seconds\n";
 
-die;
+exit(0);

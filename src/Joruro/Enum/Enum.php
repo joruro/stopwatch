@@ -10,7 +10,7 @@ abstract class Enum
     /**
      * @var array A cache of all enum values to increase performance
      */
-    protected static $cache = array();
+    protected static $cache = [];
 
     /**
      * Returns the names (or keys) of all of constants in the enum
@@ -38,5 +38,4 @@ abstract class Enum
 
         return self::$cache[$class];
     }
-
 }

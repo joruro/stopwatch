@@ -10,12 +10,25 @@ use Joruro\Enum\TimeUnits;
 class Stopwatch
 {
 
+    /**
+     * Stopwatch instance
+     * @var self
+     */
     private static $instance;
 
-    /** @var string $timeUnits */
+    /**
+     * Time units type
+     * @var string
+     */
     private $timeUnit;
 
-    private function __construct() {}
+    /**
+     * Protected construct for the Singleton pattern
+     */
+    protected function __construct()
+    {
+
+    }
 
     /** @var array $startSlots */
     private $startSlots = [];
@@ -27,10 +40,10 @@ class Stopwatch
     public static function configure($config)
     {
         $instance = self::stopwatch();
-        if(empty($config)) {
+        if (empty($config)) {
             return;
         }
-        if(isset($config['timeUnit'])) {
+        if (isset($config['timeUnit'])) {
             $instance->timeUnit = $config['timeUnit'];
         }
 
@@ -60,24 +73,32 @@ class Stopwatch
     }
 
     /**
+     * Returns the stopwatch instance. If it
+     * does not exist, creates it first
      * @return self
      */
-    private static function stopwatch() {
-        if(null === static::$instance) {
+    protected static function stopwatch()
+    {
+        if (null === static::$instance) {
             static::$instance = new Stopwatch();
         }
         return static::$instance;
     }
 
     /**
+     * Returns the array of reserved
      * @return array
      */
-    private function startSlots()
+    protected function startSlots()
     {
         return $this->startSlots;
     }
 
-    private function pop()
+    /**
+     * Remove a reserved slot from the stack
+     * @return float UNIX timestamp in microseconds
+     */
+    protected function pop()
     {
         $slots = $this->startSlots();
         $v = array_pop($slots);
@@ -85,16 +106,28 @@ class Stopwatch
         return $v;
     }
 
-    private function push($time)
+    /**
+     * Add a reserved slot to the stack
+     * @param  float $time UNIX timestamp in microseconds
+     * @return $this
+     */
+    protected function push($time)
     {
         $slots = $this->startSlots();
-        array_push($slots,$time);
+        array_push($slots, $time);
         $this->setStartSlots($slots);
+        return $this;
     }
 
-    private function setStartSlots($slots)
+    /**
+     * Set an array of reserved starting slots
+     * @param array $slots
+     * @return $this
+     */
+    protected function setStartSlots($slots)
     {
         $this->startSlots = $slots;
+        return $this;
     }
 
     /**
@@ -102,7 +135,7 @@ class Stopwatch
      * @param null|string $timeUnit
      * @return float
      */
-    private function timeConverter($time, $timeUnit = null)
+    protected function timeConverter($time, $timeUnit = null)
     {
         return $time * $this->unitMapper($timeUnit);
     }
@@ -116,13 +149,15 @@ class Stopwatch
     {
         $timeUnit = ($timeUnit)?: $this->timeUnit;
 
-        switch($timeUnit) {
-            case TimeUnits::SECONDS: return 1;
-            case TimeUnits::MILLISECONDS: return 1000;
-            case TimeUnits::MICROSECONDS: return 1000000;
+        switch ($timeUnit) {
+            case TimeUnits::SECONDS:
+                return 1;
+            case TimeUnits::MILLISECONDS:
+                return 1000;
+            case TimeUnits::MICROSECONDS:
+                return 1000000;
         }
 
         throw new InvalidTimeUnitException($timeUnit);
     }
-
 }
